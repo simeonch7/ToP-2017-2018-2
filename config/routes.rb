@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  resources :texts
-  root 'text#text'
-  post '' => 'text#create'
-  get 'messages/:id' => 'text#read'
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root 'notes#index'
+  post '/', to: 'notes#create', as:"notes"
+  get '/:slug', to: 'notes#show'
+  get '/:slug/info', to: 'notes#info'
 end
