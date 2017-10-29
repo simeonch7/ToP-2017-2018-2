@@ -5,7 +5,7 @@ class TextController < ApplicationController
   end
   def create
     $message = params[:text]
-    heroku_link = "https://texthider.herokuapp.com/messages/"
+    heroku_link = "https://second-homework-top.herokuapp.com/"
     Text.create(:text => $message, :number => $id)
     $id = $id + 1
     render plain: heroku_link + $id.to_s
