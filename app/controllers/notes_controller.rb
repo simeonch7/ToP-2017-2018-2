@@ -1,5 +1,5 @@
 class NotesController < ApplicationController
-  #before_action :set_note, only: [:show, :edit, :update, :destroy]
+  before_action :set_note, only: [:show, :edit, :update, :destroy]
 
   # GET /notes
   # GET /notes.json
@@ -10,12 +10,6 @@ class NotesController < ApplicationController
   # GET /notes/1
   # GET /notes/1.json
   def show
-    @note = Note.find_by slug: params[:slug]
-    if @note.nil?
-      render "note_gone"
-    else
-      @note.destroy
-    end
   end
 
   # GET /notes/new
@@ -30,16 +24,17 @@ class NotesController < ApplicationController
   # POST /notes
   # POST /notes.json
   def create
-    @note = Note.new({content: params[:content]})
-    if @note.save
-      redirect_to notes_url + @note.slug + '/info'
-    else
-      render 'index'
-    end
-  end
+    @note = Note.new(note_params)
 
-  def info
-    render "note_url_info", locals: {url: notes_url + "/" + params[:slug]}
+    respond_to do |format|
+      if @note.save
+        format.html { render"info", locals:{url:"https://privnotelikeapp.herokuapp.com/notes/" + @note.id.to_s} }
+        format.json { render :show, status: :created, location: @note }
+      else
+        format.html { render :new }
+        format.json { render json: @note.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # PATCH/PUT /notes/1
@@ -69,11 +64,11 @@ class NotesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_note
-      @note = Note.find(params[:slug])
+      @note = Note.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def note_params
-      params.require(:note).permit(:content)
+      params.require(:note).permit(:body)
     end
 end
