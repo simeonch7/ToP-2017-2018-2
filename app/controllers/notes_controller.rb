@@ -28,7 +28,7 @@ class NotesController < ApplicationController
 
     respond_to do |format|
       if @note.save
-        format.html { render"info", locals:{url:"https://privnotelikeapp.herokuapp.com/notes/" + @note.id.to_s} }
+        format.html { render"info", locals:{url:"https://second-homework-top.herokuapp.com/notes/" + @note.id.to_s} }
         format.json { render :show, status: :created, location: @note }
       else
         format.html { render :new }
