@@ -5,7 +5,7 @@ class NoteController < ApplicationController
   end
   def create
     $note = params[:text]
-    heroku_link = "https://second-homework-top.herokuapp.com/messages/"
+    heroku_link = "https://second-homework-top.herokuapp.com/notes/"
     Text.create(:text => $note, :number => $id)
     $id += 1
     render plain: heroku_link + $id.to_s
