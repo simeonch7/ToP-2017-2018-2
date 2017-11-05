@@ -28,7 +28,6 @@ class NotesController < ApplicationController
       params[:message] = Hash.from_xml(request.body.read)["message"]
       note = Note.create(body: params[:message])
       render xml:
-      '<?xml version = "1.0" encoding = "UTF-8" standalone = "yes"?>' +
       '<url>' +
         notes_url + "/" + note.id.to_s +
       '</url>'
